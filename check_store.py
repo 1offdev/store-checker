@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 import time
 from notify import pushNotify
 
@@ -8,7 +9,8 @@ MESSAGE = f"<a href='{STORE_URL}'>Buy NOW!</a>"
 PAGE_SCRIPT_VARIABLE = "window.pageLevelData.CTO_BOOTSTRAP"
 EXECUTE_SCRIPT = f"return {PAGE_SCRIPT_VARIABLE}"
 
-driver = webdriver.Chrome(executable_path="/opt/homebrew/bin/chromedriver")
+chrome_service = Service(executable_path="/opt/homebrew/bin/chromedriver")
+driver = webdriver.Chrome(service=chrome_service)
 driver.get(STORE_URL)
 
 time.sleep(5)
