@@ -1,13 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from notify import pushNotify
+from pushover import push_notify
+from twilio_sms import send_sms
+import os
+from dotenv import load_dotenv
 
-STORE_URL = "https://www.apple.com/shop/buy-mac/macbook-air/midnight-apple-m2-chip-with-8-core-cpu-and-10-core-gpu-512gb"
+STORE_URL = os.getenv("STORE_URL")
 
 USER_AGENT = "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
 
-MESSAGE = f"<a href='{STORE_URL}'>Buy NOW!</a>"
+MESSAGE_HTML = f"<a href='{STORE_URL}'>Buy NOW!</a>"
+MESSAGE_TEXT = f"Buy NOW! {STORE_URL}"
+
 PAGE_SCRIPT_VARIABLE = "window.pageLevelData.CTO_BOOTSTRAP"
 EXECUTE_SCRIPT = f"return {PAGE_SCRIPT_VARIABLE}"
 
@@ -23,6 +28,7 @@ try:
     buyable = page_data["purchaseInfo"]["isBuyable"]
     print(buyable)
     if buyable is True:
-        pushNotify(MESSAGE)
+        push_notify(MESSAGE_HTML)
+        send_sms(MESSAGE_TEXT)
 finally:
     driver.quit()
