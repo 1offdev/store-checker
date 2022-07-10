@@ -3,7 +3,7 @@
 
 Get notified when your product is available to order.
 
-`.env` values
+`.env` example values
 
 ```console
 STORE_URL = "https://www.apple.com/shop/buy-mac/macbook-air/midnight-apple-m2-chip-with-8-core-cpu-and-10-core-gpu-512gb"
